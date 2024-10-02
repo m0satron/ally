@@ -27,7 +27,7 @@ export const useBuildingBlockStore = defineStore('buildingBlocks', () => {
   }
 
   async function findBlock(id: number) {
-    if(selectedBlock.value && selectedBlock.value?.id === id) return 
+    if(selectedBlock.value && selectedBlock.value?.id === id) return selectedBlock.value
 
     if(!blocks.value) return await getBlock(id)
     

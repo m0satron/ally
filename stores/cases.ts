@@ -1,7 +1,5 @@
 import { createDirectus, rest, readItems, readItem } from '@directus/sdk'
 import type { Directuscase, DirectusExternalLink } from '~/types/directus/case'
-// import { useGlobalStore } from './global'
-// import { parseBlock } from './parsers'
 
 const client = createDirectus('https://fari-cms.directus.app').with(rest())
 
@@ -24,13 +22,12 @@ export const useCasesStore = defineStore('cases', () => {
     cases.value = await Promise.all(
       data
       .map(item => { delete item?.alternative_cases; return item})
-      .map(parseCase))
-
-      console.log('cases',cases.value)
+      .map(parseCase)
+    )
   }
 
   async function findCase(id: number) {
-    if(selectedCase.value && selectedCase.value?.id === id) return 
+    if(selectedCase.value && selectedCase.value?.id === id) return selectedCase.value
 
     if(!cases.value) return await getCase(id)
     
@@ -38,6 +35,7 @@ export const useCasesStore = defineStore('cases', () => {
       const found = cases.value.find(block => block.id === id )
       if(found) selectedCase.value = found
       else await getCase(id)
+      return selectedCase.value 
     } 
   }
   
@@ -79,7 +77,6 @@ export const useCasesStore = defineStore('cases', () => {
 
     selectedCase.value = await parseCase({...data, alternative_cases, external_links})
 
-    console.log(selectedCase.value)
   }
 
   return { 
@@ -138,6 +135,7 @@ async function parseCase(caseItem) {
   Object.keys(sectionMap).forEach(index => {
     block.sections.push(sectionMap[index]);
   });
+
 
   return {
     id,

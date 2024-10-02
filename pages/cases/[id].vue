@@ -22,6 +22,7 @@
       <div v-if="selectedCase?.building_blocks_used && selectedCase?.building_blocks_used?.length" class="sidebar">
             <h2 class="alternatives-title"> {{ alterativesTitle[locale]}} </h2>
 
+        <Suspense>
             <CardDesktop 
               v-for="block in selectedCase?.building_blocks_used" 
               :key="block.id"
@@ -30,7 +31,8 @@
               :categories="[block.category?.title[locale]]"
               :url="block.id"
               @click="navigateTo(`/building-blocks/${block.id}`)"
-        />
+            />
+      </Suspense>
       </div>
 
     </div>
