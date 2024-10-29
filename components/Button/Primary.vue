@@ -1,34 +1,34 @@
 <template>
   <button class="ripple" :disabled="props.disabled" :class="buttonClass">
     <p class="button-text">{{ props.label }}</p>
-    <img v-if="icon" alt="icon" :src="icon" class="icon" >
+    <img v-if="icon" alt="icon" :src="icon" class="icon" />
   </button>
 </template>
 
 <script lang="ts" setup>
-import ArrowRight from '~/assets/icons/arrow-right.svg'
-import ArrowRightPurple from '~/assets/icons/arrow-right-purple.svg'
-import type { ButtonProps } from '~/types/components/index'
+import ArrowRight from "~/assets/icons/arrow-right.svg";
+import ArrowRightPurple from "~/assets/icons/arrow-right-purple.svg";
+import type { ButtonProps } from "~/types/components/index";
 
-const props = defineProps<ButtonProps>()
+const props = defineProps<ButtonProps>();
 
 const icon = computed(() => {
-  if (props.icon === 'arrow-right') {
-    if (props.type === 'secondary') {
-      return ArrowRightPurple
+  if (props.icon === "arrow-right") {
+    if (props.type === "secondary") {
+      return ArrowRightPurple;
     } else {
-      return ArrowRight
+      return ArrowRight;
     }
   }
-  return null
-})
+  return null;
+});
 
-const buttonClass = computed(() => `button button--${props.type || 'primary'}`)
+const buttonClass = computed(() => `button button--${props.type || "primary"}`);
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors.scss' as *;
-@use 'sass:color';
+@use "/assets/scss/colors.scss" as *;
+@use "sass:color";
 
 .button {
   display: flex;

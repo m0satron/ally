@@ -1,35 +1,41 @@
 <template>
-  <div class="card hoverable">
-    <h2 class="title">{{ props.title }}</h2>
-    <p class="description">{{ truncatedDescription }}</p>
-  </div>
+  <a
+    :href="props.url"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="card-link"
+  >
+    <div class="card hoverable">
+      <h2 class="title">{{ props.title }}</h2>
+      <p class="description">{{ truncatedDescription }}</p>
+    </div>
+  </a>
 </template>
 
 <script setup lang="ts">
-import type { CardProps } from '~/types/components/index'
+import type { CardProps } from "~/types/components/index";
 
-const props = defineProps<CardProps>()
-
+const props = defineProps<CardProps>();
 
 const truncatedDescription = computed(() => {
-  if(!props.description) return ''
+  if (!props.description) return "";
 
   const maxLength = 100;
   return props.description.length > maxLength
-    ? props.description.slice(0, maxLength) + '...'
+    ? props.description.slice(0, maxLength) + "..."
     : props.description;
 });
-
-
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use 'sass:color';
-
-.card {
+@use "/assets/scss/colors" as *;
+@use "sass:color";
+a {
   min-width: 24rem;
   max-width: 50%;
+}
+.card {
+  height: 100%;
   color: $text-color;
   background-color: white;
   border-radius: 0.315rem;
@@ -54,6 +60,6 @@ const truncatedDescription = computed(() => {
 }
 
 .description {
-  font-size: 1.2rem
+  font-size: 1.2rem;
 }
 </style>

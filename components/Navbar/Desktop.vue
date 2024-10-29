@@ -1,24 +1,25 @@
 <template>
   <nav>
-    <NuxtLink 
-      v-for="{ name, path } in items" :key="path" :to="path">{{ name }}
+    <NuxtLink v-for="{ name, path } in items" :key="path" :to="path"
+      >{{ name }}
     </NuxtLink>
   </nav>
 </template>
 
 <script setup lang="ts">
-defineProps<{ items?: unknown[] }>()
+defineProps<{ items?: unknown[] }>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use 'sass:color';
+@use "/assets/scss/colors" as *;
+@use "sass:color";
 
 nav {
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.4rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   color: $text-color;
   white-space: nowrap;
 

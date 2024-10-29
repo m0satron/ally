@@ -19,13 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import type { BannerProps } from '~/types/components'
-defineProps<BannerProps>()
+import type { BannerProps } from "~/types/components";
+defineProps<BannerProps>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/typography' as *;
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/typography" as *;
 
 .banner {
   display: flex;

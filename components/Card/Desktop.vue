@@ -1,53 +1,58 @@
 <template>
-  <div class="card" :class="[props.url && 'hoverable', props.color || 'primary']">
+  <div
+    class="card"
+    :class="[props.url && 'hoverable', props.color || 'primary']"
+  >
     <template v-if="props.categories?.length">
-      <ChipItem v-for="category in props.categories" :key="category" :label="category" class="chip" />
+      <ChipItem
+        v-for="category in props.categories"
+        :key="category"
+        :label="category"
+        class="chip"
+      />
     </template>
     <h2 class="title">{{ props.title }}</h2>
     <p class="description">{{ truncatedDescription }}</p>
-    <img v-if="image" :src="image" class="image" >
+    <img v-if="image" :src="image" class="image" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { CardProps } from '~/types/components/index'
+import type { CardProps } from "~/types/components/index";
 
-const props = defineProps<CardProps>()
-
+const props = defineProps<CardProps>();
 
 const truncatedDescription = computed(() => {
-  if(!props.description) return ''
+  if (!props.description) return "";
 
   const maxLength = 200;
   return props.description.length > maxLength
-    ? props.description.slice(0, maxLength) + '...'
+    ? props.description.slice(0, maxLength) + "..."
     : props.description;
 });
-
-
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use 'sass:color';
+@use "/assets/scss/colors" as *;
+@use "sass:color";
 
 .card {
   min-width: 24rem;
   max-width: 50%;
-  height: 16rem;
+  height: 20rem;
   color: $text-color;
   background-color: white;
-  border-radius: 0.315rem;
-  padding: 1.25rem;
+  border-radius: 1rem;
+  padding: 1.5rem;
   cursor: pointer;
 }
 
 .primary {
-  border: 1px solid $medium-purple;
+  border: 2px solid $medium-purple;
 }
 
 .secondary {
-  border: 1px solid $light-blue;
+  border: 2px solid $light-blue;
 }
 
 .hoverable {
@@ -75,6 +80,6 @@ const truncatedDescription = computed(() => {
 }
 
 .description {
-  font-size: 1.2rem
+  font-size: 1.2rem;
 }
 </style>

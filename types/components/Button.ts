@@ -1,6 +1,6 @@
 export interface ButtonProps {
-  label: string
-  type?: 'primary' | 'secondary'
-  disabled?: boolean
-  icon?: 'arrow-right'
+  label: string;
+  type?: "primary" | "secondary";
+  disabled?: boolean;
+  icon?: "arrow-right";
 }

@@ -5,11 +5,19 @@
 
       <div class="card-container">
         <template v-if="$props.mobile">
-          <CardMobile v-for="card in $props.cards" :key="card.title" v-bind="card" />
+          <CardMobile
+            v-for="card in $props.cards"
+            :key="card.title"
+            v-bind="card"
+          />
         </template>
 
         <template v-else>
-          <CardDesktop v-for="card in $props.cards" :key="card.title" v-bind="card" />
+          <CardDesktop
+            v-for="card in $props.cards"
+            :key="card.title"
+            v-bind="card"
+          />
         </template>
       </div>
     </div>
@@ -17,14 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CardProps } from '~/types/components/index'
+import type { CardProps } from "~/types/components/index";
 
-defineProps<{ title?: string; cards: CardProps[]; mobile: boolean }>()
+defineProps<{ title?: string; cards: CardProps[]; mobile: boolean }>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors.scss' as *;
-@use '/assets/typography' as *;
+@use "/assets/scss/colors.scss" as *;
+@use "/assets/typography" as *;
 
 .wrapper {
   display: flex;

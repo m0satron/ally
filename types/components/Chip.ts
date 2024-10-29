@@ -1,4 +1,4 @@
 export interface ChipProps {
-  label: string
-  onDark: boolean
+  label: string;
+  onDark: boolean;
 }

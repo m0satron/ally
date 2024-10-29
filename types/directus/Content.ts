@@ -1,7 +1,7 @@
 export interface DirectusContentBlock {
   id: string;
-  type: 'header' | 'paragraph';
+  type: "header" | "paragraph";
   data: {
     text: string;
   };
-};
+}

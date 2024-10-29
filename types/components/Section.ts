@@ -1,4 +1,6 @@
 export interface SectionProps {
-  title: string
-  description: string
+  title: string;
+  description: string;
+  html?: boolean
+  onDark?:boolean
 }

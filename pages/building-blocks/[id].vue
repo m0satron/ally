@@ -1,105 +1,148 @@
 <template>
   <main class="main">
     <Suspense>
-      <HeroDesktop 
+      <HeroDesktop
         dense
-        :title="selectedBlock?.title[locale]" 
+        :title="selectedBlock?.title[locale]"
         :description="selectedBlock?.description[locale]"
         :categories="[selectedBlock?.category.title[locale]]"
-        />
+      />
     </Suspense>
-    <Suspense>
-    <div class="page-items">
-      <div class="sections">
-        <PageSection
-          v-for="section in selectedBlock?.sections" 
-          :key="section.title[locale]"
-          :title="section.title[locale]"
-          :description="section.description[locale]"
-          />
 
-      </div>
-      <div class="sidebar">
+    <Suspense>
+      <div class="page-items">
+        <div class="sections">
+          <PageSection
+            html
+            :title="benefitsTitle[locale]"
+            :description="selectedBlock?.benefits[locale]"
+          />
+          <PageSection
+            html  
+            :title="howToExecuteTitle[locale]"
+            :description="selectedBlock?.how_to_execute[locale]"
+          />
+          <PageSection
+            html
+            :title="kpisTitle[locale]"
+            :description="selectedBlock?.kpis[locale]"
+          />
+        </div>
+
+        <div class="sidebar">
           <CardBlockRequirement
             class="requirements"
             :locale="locale"
             :cost="selectedBlock?.cost"
             :effort="selectedBlock?.effort"
             :involvement="selectedBlock?.involvement"
-            :min-hrs="selectedBlock?.minimum_hours_required"
-            :max-hrs="selectedBlock?.maximum_hours_required"
-            />
+            :time="selectedBlock?.time"
+            :maintenance="selectedBlock?.maintenance"
+          />
 
-            <h2
+          <h2
             v-if="selectedBlock?.alternative_building_blocks.length"
-              class="alternatives-title"> {{ alterativesTitle[locale]}} </h2>
+            class="alternatives-title"
+          >
+            {{ alterativesTitle[locale] }}
+          </h2>
 
-            <CardDesktop 
-              v-for="block in selectedBlock?.alternative_building_blocks" 
-              :key="block.id"
-              :title="block.title[locale]"
-              :description="block.description[locale]"
-              :categories="[block.category?.title[locale]]"
-              :url="block.id"
-              @click="navigateTo(`/building-blocks/${block.id}`)"
+          <CardDesktop
+            v-for="block in selectedBlock?.alternative_building_blocks"
+            :key="block.id"
+            :title="block.title[locale]"
+            :description="block.description[locale]"
+            :categories="[block.category?.title[locale]]"
+            :url="block.id"
+            class="link"
+            @click="navigateTo(`/building-blocks/${block.id}`)"
+          />
+        </div>
+      </div>
+    </Suspense>
+
+    <PageSection
+        class="links-intro"
+       :title="externalLinksTitle[locale]"
+       :description="externalLinksParagraph[locale]"
+    />
+    <Suspense>
+      <div class="links">
+        <CardLink
+          v-for="link in selectedBlock?.external_links"
+          :key="link.id"
+          :title="link.title[locale]"
+          :description="link.description?.[locale]"
+          :url="link.url"
+          class="link"
         />
       </div>
+    </Suspense>
 
-    </div>
-  </Suspense>
-    <Suspense>
-    <div class="links">
-      <CardLink 
-              v-for="link in selectedBlock?.external_links" 
-              :key="link.id"
-              :title="link.title[locale]"
-              :description="link.description[locale]"
-              :url="link.id"
-              @click="navigateTo(`/building-blocks/${link.id}`)"
-        />
-    </div>
-      </Suspense>
-
-      <BannerDesktop 
-        v-if="banner" 
-        class="banner"
-        :title="banner.title[locale]"
-        :description="banner.description[locale]"
-        :link-description="banner.action.label[locale]"
-        :url="banner.action.url"
-        
-        />
+    <BannerDesktop
+      v-if="banner"
+      class="banner"
+      :title="banner.title[locale]"
+      :description="banner.description[locale]"
+      :link-description="banner.action.label[locale]"
+      :url="banner.action.url"
+    />
   </main>
 </template>
 <script setup lang="ts">
-const { locale, banner } = storeToRefs(useGlobalStore())
-const { selectedBlock } = storeToRefs(useBuildingBlockStore())
-const { findBlock } = useBuildingBlockStore()
-const route = useRoute()
+const { locale, banner } = storeToRefs(useGlobalStore());
+const { selectedBlock } = storeToRefs(useBuildingBlockStore());
+const { findBlock } = useBuildingBlockStore();
+const route = useRoute();
 
-
-onMounted(async () => await findBlock(route.params.id))
-
+onMounted(async () => await findBlock(route.params.id));
 
 const alterativesTitle = {
-  en: 'Alternative building blocks',
-  nl: 'Alternatieve bouwstenen',
-  fr: 'Blocs de construction alternatifs'
+  en: "Alternative building blocks",
+  nl: "Alternatieve bouwstenen",
+  fr: "Blocs de construction alternatifs",
+};
+
+const benefitsTitle = {
+  en: "How does this building block help?",
+  nl: "Hoe helpt deze bouwsteen?",
+  fr: "Comment ce bloc de construction aide-t-il ?",
+};
+
+const howToExecuteTitle = {
+  en: "How can you execute this building block?",
+  nl: "Hoe kun je deze bouwsteen uitvoeren?",
+  fr: "Comment pouvez-vous exécuter ce bloc de construction ?",
+};
+
+const kpisTitle = {
+  en: "What KPI’s can you set for yourself?",
+  nl: "Welke KPI’s kunt u voor uzelf instellen?",
+  fr: "Quels indicateurs clés de performance pouvez-vous définir pour vous-même ?",
+};
+
+const externalLinksTitle = {
+  en: 'What supporting materials are available?',
+  nl: 'Welke ondersteunende materialen zijn beschikbaar?',
+  fr: 'Quels supports sont disponibles ?',
 }
 
+const externalLinksParagraph = {
+  en: 'Explore these supporting materials to enhance your understanding and gain comprehensive insights into the topic at hand.',
+  nl: 'Verken deze ondersteunende materialen om uw begrip te vergroten en uitgebreid inzicht te krijgen in het onderwerp.',
+  fr: 'Explorez ces documents de soutien pour améliorer votre compréhension et obtenir des informations complètes sur le sujet traité.'
+}
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/spacing' as *;
-
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/spacing" as *;
 
 .page-items {
   display: flex;
   margin: 2rem 0;
   justify-content: space-between;
 }
-
 
 .sections {
   display: flex;
@@ -112,10 +155,10 @@ const alterativesTitle = {
   min-width: 20%;
 }
 
-.banner, .links {
+.banner,
+.links {
   margin-bottom: 2rem;
 }
-
 
 .sidebar {
   width: 40%;
@@ -126,8 +169,21 @@ const alterativesTitle = {
 }
 
 .alternatives-title {
-  align-self: center;
-  font-weight: bold
+  // align-self: center;
+  margin-right: 10rem;
+  font-weight: bold;
 }
 
+.links-intro {
+  margin-bottom: 2rem;
+}
+
+.links {
+  display: flex;
+  gap: 2rem;
+}
+
+.link {
+  width: 40rem;
+}
 </style>

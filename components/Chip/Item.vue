@@ -1,16 +1,16 @@
 <template>
-  <div class="chip" :class="{ onDark  }" >{{ label }}</div>
+  <div class="chip" :class="{ onDark }">{{ label }}</div>
 </template>
 
 <script setup lang="ts">
-import type { ChipProps } from '~/types/components/index'
+import type { ChipProps } from "~/types/components/index";
 
-defineProps<ChipProps>()
+defineProps<ChipProps>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors.scss' as *;
-@use 'sass:color';
+@use "/assets/scss/colors.scss" as *;
+@use "sass:color";
 
 .chip {
   display: inline-block;

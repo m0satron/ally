@@ -1,37 +1,47 @@
 <template>
   <main class="main">
     <div class="search-container">
-      <div class="search-container__text-content">
-        <h1 v-if="pages.blocks" class="search-container__title" >
-          {{ pages.blocks.title[locale] }}
-        </h1>
-        <p v-if="pages.blocks" class="search-container__description">
-          {{ pages.blocks?.sections?.[0].description[locale] }}
-        </p>
-
+      <div  v-if="pageData" class="search-container__text-content">
+        <PageSection html onDark :title="pageData.title" :description="pageData.content[0]"/>
       </div>
 
       <div class="search-filter">
         <div class="search-bar">
-          <FormSearchBar v-model="searchTerm" @submit="submitSearch" />
-          <ButtonPrimary label="Search" icon="arrow-right" @click="submitSearch" />
+          <FormSearchBar v-model="searchTerm" />
         </div>
 
         <div class="dropdowns">
-          <FormDropDown v-model="selectedCategory" :options="categories" placeholder="Category" />
-          <FormDropDown v-model="selectedCost" :options="cost" placeholder="Budget" />
-          <FormDropDown v-model="selectedDifficulty" :options="difficulty" placeholder="Difficulty" />
+          <FormDropDown
+            v-model="selectedCategory"
+            :options="categories"
+            placeholder="Category"
+          />
+          <FormDropDown
+            v-model="selectedCost"
+            :options="cost"
+            placeholder="Cost"
+          />
+          <FormDropDown
+            v-model="selectedDifficulty"
+            :options="difficulty"
+            placeholder="Difficulty"
+          />
         </div>
       </div>
     </div>
 
     <div class="content-wrapper">
-      <template v-if="!selectedCategory || selectedCategory.value === 'governance_values'">
+      <template
+        v-if="
+          !selectedCategory.value ||
+          selectedCategory.value === 'governance_values'
+        "
+      >
+      <PageSection v-bind="governanceSection" />
+      <div class="card-container">
 
-        <PageSection v-bind="governanceSection" />
-    
-        <CardDesktop 
-          v-for="block in governanceBlocks" 
+        <CardDesktop
+          v-for="block in governanceBlocks"
           :key="block.id"
           :title="block.title[locale]"
           :description="block.description[locale]"
@@ -39,238 +49,300 @@
           :url="block.id"
           @click="navigateTo(`/building-blocks/${block.id}`)"
         />
-        <CardDesktop 
-        v-if="!governanceBlocks.length" 
-        title="Not found"
-        description="Try another search filter"
-      />
-    </template>
-
-    <template v-if="!selectedCategory || selectedCategory.value === 'culture_skills'">
-
-      <PageSection v-if="cultureSection" v-bind="cultureSection" />
-
-      <CardDesktop 
-        v-for="block in cultureBlocks" 
-        :key="block.id"
-        :title="block.title[locale]"
-        :description="block.description[locale]"
-        :categories="[block.category.title[locale]]"
-        :url="block.id"
-        @click="navigateTo(`/building-blocks/${block.id}`)"
-      />
-      <CardDesktop 
-        v-if="!cultureBlocks.length" 
-        title="Not found"
-        description="Try another search filter"
-      />
-
-    </template>
-
-    <template 
-      v-if="!selectedCategory || selectedCategory.value === 'communication_involvement'"
-    >
-        <PageSection 
-          v-if="communicationSection" 
-          v-bind="communicationSection" 
+        <CardDesktop
+          v-if="!governanceBlocks.length"
+          title="Not found"
+          description="Try another search filter"
         />
-
-        <CardDesktop 
-          v-for="block in communicationBlocks" 
-          :key="block.id"
-          :title="block.title[locale]"
-          :description="block.description[locale]"
-          :categories="[block.category.title[locale]]"
-          :url="block.id"
-          @click="navigateTo(`/building-blocks/${block.id}`)"
-        />
-        <CardDesktop 
-        v-if="!cultureBlocks.length" 
-        title="Not found"
-        description="Try another search filter"
-      />
-
+      </div>
       </template>
-      <template v-if="!selectedCategory || selectedCategory.value === 'methods_processes'">
-        <PageSection v-if="methodsSection" v-bind="methodsSection" />
 
-          <CardDesktop 
-            v-for="block in methodsBlocks" 
-            :key="block.id"
-            :title="block.title[locale]"
-           :description="block.description[locale]"
-            :categories="[block.category.title[locale]]"
-                      :url="block.id"
-            @click="navigateTo(`/building-blocks/${block.id}`)"
+      <template
+        v-if="
+          !selectedCategory.value || selectedCategory.value === 'culture_skills'
+        "
+      >
+        <PageSection v-if="cultureSection" v-bind="cultureSection" />
+        <div class="card-container">
+        <CardDesktop
+          v-for="block in cultureBlocks"
+          :key="block.id"
+          :title="block.title[locale]"
+          :description="block.description[locale]"
+          :categories="[block.category.title[locale]]"
+          :url="block.id"
+          color="primary"
+          @click="navigateTo(`/building-blocks/${block.id}`)"
+        />
+        <CardDesktop
+          v-if="!cultureBlocks.length"
+          title="Not found"
+          description="Try another search filter"
+        />
+      </div>
+      </template>
+
+      <template
+        v-if="
+          !selectedCategory.value ||
+          selectedCategory.value === 'communication_involvement'
+        "
+      >
+        <PageSection
+          v-if="communicationSection"
+          v-bind="communicationSection"
+        />
+        <div class="card-container">
+
+          <CardDesktop
+          v-for="block in communicationBlocks"
+          :key="block.id"
+          :title="block.title[locale]"
+          :description="block.description[locale]"
+          :categories="[block.category.title[locale]]"
+          :url="block.id"
+          color="primary"
+          @click="navigateTo(`/building-blocks/${block.id}`)"
           />
-          <CardDesktop 
-        v-if="!cultureBlocks.length" 
-        title="Not found"
-        description="Try another search filter"
-      />
-    </template>
-
+          <CardDesktop
+          v-if="!communicationBlocks.length"
+          title="Not found"
+          color="secondary"
+          description="Try another search filter"
+          />
         </div>
+      </template>
+
+ 
+        <PageSection v-if="methodsSection" v-bind="methodsSection" />
+        <div class="card-container">
+
+          <CardDesktop
+          v-for="block in methodsBlocks"
+          :key="block.id"
+          :title="block.title[locale]"
+          :description="block.description[locale]"
+          :categories="[block.category.title[locale]]"
+          :url="block.id"
+          color="primary"
+          @click="navigateTo(`/building-blocks/${block.id}`)"
+          />
+          
+          <CardDesktop
+          v-if="!methodsBlocks.length"
+          title="Not found"
+          color="secondary"
+          description="Try another search filter"
+          />
+        </div>
+      
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-const { locale, buildingBlockCategories } = storeToRefs(useGlobalStore())
-const { pages } = storeToRefs(useStaticPageStore())
-const { getStaticPage } = useStaticPageStore()
-const { blocks } = storeToRefs(useBuildingBlockStore())
-const { getBlocks } = useBuildingBlockStore()
-const { getBuildingBlockCategories } = useGlobalStore()
+const { locale, buildingBlockCategories } = storeToRefs(useGlobalStore());
+const { pages } = storeToRefs(useStaticPageStore());
+const { getStaticPage } = useStaticPageStore();
+const { blocks } = storeToRefs(useBuildingBlockStore());
+const { getBlocks } = useBuildingBlockStore();
+const { getBuildingBlockCategories } = useGlobalStore();
 
-onMounted(async() => 
-  await Promise.all([getBuildingBlockCategories(),getBlocks(), getStaticPage('blocks')])
-)
+onMounted(
+  async () =>
+    await Promise.all([
+      getBuildingBlockCategories(),
+      getBlocks(),
+      getStaticPage("blocks"),
+    ]),
+);
+
+const pageData = computed(() => {
+  if (!pages.value.blocks)return null
+
+  const title = pages.value.blocks?.title[locale.value];
+  const content = pages.value.blocks?.content?.map(c => c[locale.value])
+
+  return {
+    title,
+    content,
+  };
+});
+
+
+const filteredBlocks = computed(() => {
+  const blocksCopy = [...blocks.value];
+
+  return filterBlocks({ searchTerm: searchTerm.value, blocks: blocksCopy });
+});
 
 const governanceSection = computed(() => {
-  if(!buildingBlockCategories.value) return
-  const section = buildingBlockCategories.value?.find(({slug }) => slug === 'governance_values')
+  if (!buildingBlockCategories.value) return;
+  const section = buildingBlockCategories.value?.find(
+    ({ slug }) => slug === "governance_values",
+  );
   return {
     title: section?.title[locale.value],
-    description: section?.description[locale.value]
-  }
-})
+    description: section?.description[locale.value],
+  };
+});
 
 const governanceBlocks = computed(() => {
-  if(!blocks.value) return []
+  if (!filteredBlocks.value) return [];
 
-  return blocks.value
-    .filter(({category}) => category?.slug ===  'governance_values')
+  return filteredBlocks.value
+    .filter(({ category }) => category?.slug === "governance_values")
     .filter((block) => {
-      if(!selectedDifficulty.value) return true
-      return selectedDifficulty.value?.value === block.effort
+      if (!selectedDifficulty.value || !selectedDifficulty.value.value)
+        return true;
+      return selectedDifficulty.value?.value === block.effort;
     })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-})
-
+    .filter((block) => {
+      if (!selectedCost.value || !selectedCost.value.value) return true;
+      return selectedCost.value?.value === block.cost;
+    });
+});
 
 const cultureSection = computed(() => {
-  if(!buildingBlockCategories.value) return
-  const section = buildingBlockCategories.value?.find(({slug }) => slug === 'culture_skills')
+  if (!buildingBlockCategories.value) return;
+  const section = buildingBlockCategories.value?.find(
+    ({ slug }: { slug: string }) => slug === "culture_skills",
+  );
   return {
     title: section?.title[locale.value],
-    description: section?.description[locale.value]
-  }
-})
+    description: section?.description[locale.value],
+  };
+});
 
 const cultureBlocks = computed(() => {
-  if(!blocks.value) return []
+  if (!filteredBlocks.value) return [];
 
-  return blocks.value
-    .filter(({category}) => category?.slug ===  'culture_skills')
+  return filteredBlocks.value
+    .filter(({ category }) => category?.slug === "culture_skills")
     .filter((block) => {
-      if(!selectedDifficulty.value) return true
-      return selectedDifficulty.value?.value === block.effort
+      if (!selectedDifficulty.value || !selectedDifficulty.value.value)
+        return true;
+      return selectedDifficulty.value?.value === block.effort;
     })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-})
-
+    .filter((block) => {
+      if (!selectedCost.value || !selectedCost.value.value) return true;
+      return selectedCost.value?.value === block.cost;
+    });
+});
 
 const communicationSection = computed(() => {
-  if(!buildingBlockCategories.value) return
-  const section = buildingBlockCategories.value?.find(({slug }) => slug === 'communication_involvement')
+  if (!buildingBlockCategories.value) return;
+  const section = buildingBlockCategories.value?.find(
+    ({ slug }) => slug === "communication_involvement",
+  );
   return {
     title: section?.title[locale.value],
-    description: section?.description[locale.value]
-  }
-})
+    description: section?.description[locale.value],
+  };
+});
 
 const communicationBlocks = computed(() => {
-  if(!blocks.value) return []
+  if (!filteredBlocks.value) return [];
 
-  return blocks.value
-    .filter(({category}) => category?.slug ===  'communication_involvement')
+  return filteredBlocks.value
+    .filter(({ category }) => category?.slug === "communication_involvement")
     .filter((block) => {
-      if(!selectedDifficulty.value) return true
-      return selectedDifficulty.value?.value === block.effort
+      if (!selectedDifficulty.value || !selectedDifficulty.value.value)
+        return true;
+      return selectedDifficulty.value?.value === block.effort;
     })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-})
+    .filter((block) => {
+      if (!selectedCost.value || !selectedCost.value.value) return true;
+      return selectedCost.value?.value === block.cost;
+    });
+});
 
 const methodsSection = computed(() => {
-  if(!buildingBlockCategories.value) return
-  const section = buildingBlockCategories.value?.find(({slug }) => slug === 'methods_processes')
+  if (!buildingBlockCategories.value) return;
+  const section = buildingBlockCategories.value?.find(
+    ({ slug }) => slug === "methods_processes",
+  );
   return {
     title: section?.title[locale.value],
-    description: section?.description[locale.value]
-  }
-})
+    description: section?.description[locale.value],
+  };
+});
 
 const methodsBlocks = computed(() => {
-  if(!blocks.value) return []
+  if (!filteredBlocks.value) return [];
 
-  return blocks.value
-    .filter(({category}) => category?.slug ===  'methods_processes')
+  return filteredBlocks.value
+    .filter(({ category }) => category?.slug === "methods_processes")
     .filter((block) => {
-      if(!selectedDifficulty.value) return true
-      return selectedDifficulty.value?.value === block.effort
+      if (!selectedDifficulty.value || !selectedDifficulty.value.value)
+        return true;
+      return selectedDifficulty.value?.value === block.effort;
     })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-    .filter(block => {
-      if(!selectedCost.value) return true
-      return selectedCost.value?.value === block.cost
-    })
-})
+    .filter((block) => {
+      if (!selectedCost.value || !selectedCost.value.value) return true;
+      return selectedCost.value?.value === block.cost;
+    });
+});
 
-
-const searchTerm = ref<string>('')
+const searchTerm = ref<string>("");
 
 const categories = [
-  { label: 'Governance & values', value: 'governance_values' },
-  { label: 'Culture & skills', value: 'culture_skills' },
-  { label: 'Communication & involvement', value: 'communication_involvement' },
-  { label: 'Methods & processes', value: 'methods_processes ' }
-]
+  { label: "Category", value: null },
+  { label: "Governance & values", value: "governance_values" },
+  { label: "Culture & skills", value: "culture_skills" },
+  { label: "Communication & involvement", value: "communication_involvement" },
+  { label: "Methods & processes", value: "methods_processes " }
+];
 
 const cost = [
-  { label: 'Low', value: 'low' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'High', value: 'high' }
-]
+  { label: "Cost", value: null },
+  { label: "Low", value: "low" },
+  { label: "Medium", value: "medium" },
+  { label: "High", value: "high" },
+];
 
 const difficulty = [
-  { label: 'Low', value: 'low' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'High', value: 'high' }
-]
+  { label: "Difficulty", value: null },
+  { label: "Low", value: "low" },
+  { label: "Medium", value: "medium" },
+  { label: "High", value: "high" },
+];
 
-const selectedCategory = ref<Option | undefined>()
-const selectedCost = ref<Option | undefined>()
-const selectedDifficulty = ref<Option | undefined>()
+const selectedCategory = ref(categories[0]);
+const selectedCost = ref(cost[0]);
+const selectedDifficulty = ref(difficulty[0]);
 
+function filterBlocks({ blocks, searchTerm }) {
+  if (!searchTerm || !searchTerm.length) return blocks;
+
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+  function searchInObject(obj) {
+    for (const key in obj) {
+      if (obj[key]) {
+        const value = obj[key];
+
+        if (typeof value === "string") {
+          if (value.toLowerCase().includes(lowerCaseSearchTerm)) {
+            return true;
+          }
+        } else if (typeof value === "object" && value !== null) {
+          if (searchInObject(value)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  return blocks.filter((block) => searchInObject(block));
+}
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/spacing' as *;
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/spacing" as *;
 
 .search-container {
   background-color: $deep-purple;
@@ -339,14 +411,6 @@ const selectedDifficulty = ref<Option | undefined>()
   flex: 50%;
 }
 
-.content-wrapper > *:first-child {
-  flex: 1;
-}
-
-.content-wrapper > *:nth-child(2) {
-  flex: 2;
-}
-
 .categories-overview {
   margin-top: 2rem;
   display: flex;
@@ -354,14 +418,17 @@ const selectedDifficulty = ref<Option | undefined>()
   gap: 2rem;
 }
 
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
 .card {
   height: 16rem;
+  width: 36rem;
   color: $text-color;
   background-color: white;
-  border-radius: 0.315rem;
-  padding: 1.25rem;
-  border: 1px solid $light-blue;
-  flex: calc(50% - 2rem);
   margin-bottom: 1rem;
   .title {
     font-weight: bold;

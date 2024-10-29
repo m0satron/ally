@@ -1,5 +1,5 @@
 import type { DirectusContentBlock } from "./Content";
-import type { Locale } from '../Locale'
+import type { Locale } from "../Locale";
 
 export interface DirectusTranslation {
   id: number;
@@ -12,26 +12,23 @@ export interface DirectusTranslation {
     blocks: DirectusContentBlock[];
     version: string;
   };
-};
+}
 
+type BuildingBlockCategory = "governance_values" | "culture_skills";
 
-
-type BuildingBlockCategory = 'governance_values' | 'culture_skills'
-
-export interface BuildingBlockCategoryItem  {
-  slug: BuildingBlockCategory,
-  
+export interface BuildingBlockCategoryItem {
+  slug: BuildingBlockCategory;
 }
 
 export interface ExternalLink {
   url: string;
   slug: string;
   title: {
-    [locale in Locale]: string
+    [locale in Locale]: string;
   };
   description: {
-    [locale in Locale]: string
-  }
+    [locale in Locale]: string;
+  };
 }
 
 export interface DirectusExternalLink {
@@ -55,11 +52,11 @@ export interface DirectusBuildingBlock {
   involvement: string;
   maximum_hours_required: number;
   minimum_hours_required: number;
-  alternative_building_blocks: DirectusBuildingBlock[]
-  external_links: DirectusExternalLink[]
+  alternative_building_blocks: DirectusBuildingBlock[];
+  external_links: DirectusExternalLink[];
   category: {
     slug: string;
     translations: number[];
   };
   translations: DirectusTranslation[];
-};
+}

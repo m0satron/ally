@@ -2,15 +2,20 @@
   <div class="glass-card">
     <h2 class="title">{{ title }}</h2>
     <p class="description">{{ description }}</p>
-    <ChipItem v-for="category in categories" :key="category" :label="category" class="chip" on-dark />
-
+    <ChipItem
+      v-for="category in categories"
+      :key="category"
+      :label="category"
+      class="chip"
+      on-dark
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { GlassCardProps } from '~/types/components/index'
+import type { GlassCardProps } from "~/types/components/index";
 
-defineProps<GlassCardProps>()
+defineProps<GlassCardProps>();
 </script>
 
 <style scoped lang="scss">
@@ -35,10 +40,10 @@ defineProps<GlassCardProps>()
 }
 
 .description {
-  font-size: 1.2rem
+  font-size: 1.2rem;
 }
 
 .chip {
-  margin-top : 1rem
+  margin-top: 1rem;
 }
 </style>

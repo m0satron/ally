@@ -1,16 +1,15 @@
 <template>
   <div class="wrapper">
     <div class="logos">
-      <img src="/assets/logos/Logo_KDM_EN_wit 2.png" class="logo">
-      <img src="/assets/logos/AI_Flanders_logo.png" class="logo">
-      <img src="/assets/logos/FARI_logo_white.png" class="logo">
-      <img src="/assets/logos/ULB_VUB_white.png" class="logo">
+      <img src="/assets/logos/Logo_KDM_EN_wit 2.png" class="logo" />
+      <img src="/assets/logos/AI_Flanders_logo.png" class="logo" />
+      <img src="/assets/logos/FARI_logo_white.png" class="logo" />
+      <img src="/assets/logos/ULB_VUB_white.png" class="logo" />
       <p>&copy; 2021</p>
     </div>
     <div class="menu">
       <a> Privacy</a>
       <a> Cookie policy</a>
-      <a> Contact </a>
     </div>
   </div>
 </template>

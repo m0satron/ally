@@ -1,9 +1,13 @@
 <template>
   <div ref="dropdown" class="language-dropdown" @click="toggleDropdown">
-    <button class="dropdown-button" aria-haspopup="true" :aria-expanded="isOpen">
-      <img alt="icon" src="/assets/icons/language-icon.svg" class="icon" >
+    <button
+      class="dropdown-button"
+      aria-haspopup="true"
+      :aria-expanded="isOpen"
+    >
+      <img alt="icon" src="/assets/icons/language-icon.svg" class="icon" />
 
-      {{ props.locale?.split('-').pop() }}
+      {{ props.locale?.split("-").pop() }}
     </button>
     <ul v-if="isOpen" class="dropdown-menu" role="listbox">
       <li
@@ -21,46 +25,46 @@
 
 <script lang="ts" setup>
 // import { onClickOutside } from '@vueuse/core'
-import type { Locale, LocaleObject } from '@/types/Locale'
+import type { Locale, LocaleObject } from "@/types/Locale";
 
 interface Props {
-  locales: LocaleObject[]
-  locale: Locale
+  locales: LocaleObject[];
+  locale: Locale;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits<{ (e: 'change', locale: Locale): void }>()
+const props = defineProps<Props>();
+const emit = defineEmits<{ (e: "change", locale: Locale): void }>();
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 
-const toggleDropdown = () => (isOpen.value = !isOpen.value)
+const toggleDropdown = () => (isOpen.value = !isOpen.value);
 
 const selectLocale = (locale: Locale) => {
-  if (locale !== props.locale) emit('change', locale)
+  if (locale !== props.locale) emit("change", locale);
 
-  isOpen.value = false
-}
+  isOpen.value = false;
+};
 
-const closeDropdown = () => (isOpen.value = false)
+const closeDropdown = () => (isOpen.value = false);
 
-const dropdown = ref<HTMLDivElement | null>(null)
-onClickOutside(dropdown, closeDropdown)
+const dropdown = ref<HTMLDivElement | null>(null);
+onClickOutside(dropdown, closeDropdown);
 
-onMounted(() => document.addEventListener('keydown', handleKeydown))
+onMounted(() => document.addEventListener("keydown", handleKeydown));
 
-onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
+onUnmounted(() => document.removeEventListener("keydown", handleKeydown));
 
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape') {
-    closeDropdown()
+  if (event.key === "Escape") {
+    closeDropdown();
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/typography' as *;
-@use 'sass:color';
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/typography" as *;
+@use "sass:color";
 
 .language-dropdown {
   position: relative;
@@ -109,7 +113,7 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 }
 
-.dropdown-menu li[aria-selected='true'] {
+.dropdown-menu li[aria-selected="true"] {
   color: $medium-purple;
 }
 
