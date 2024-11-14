@@ -52,6 +52,7 @@
         <CardDesktop
           v-if="!governanceBlocks.length"
           title="Not found"
+          color="secondary"
           description="Try another search filter"
         />
       </div>
@@ -77,6 +78,7 @@
         <CardDesktop
           v-if="!cultureBlocks.length"
           title="Not found"
+          color="secondary"
           description="Try another search filter"
         />
       </div>

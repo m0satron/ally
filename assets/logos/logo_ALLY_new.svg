@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Laag_1" data-name="Laag 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1264 386">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: Poppins-Medium, Poppins;
+        font-weight: 500;
+        letter-spacing: -.02em;
+      }
+
+      .cls-2 {
+        font-family: Poppins-Black, Poppins;
+        font-size: 145px;
+        font-weight: 800;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #341354;
+      }
+
+      .cls-4 {
+        font-family: Poppins-Bold, Poppins;
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        font-size: 84px;
+      }
+    </style>
+  </defs>
+  <text class="cls-2" transform="translate(28.33 131)"><tspan x="0" y="0">A</tspan></text>
+  <text class="cls-2" transform="translate(199.41 193.53)"><tspan x="0" y="0">L</tspan></text>
+  <text class="cls-2" transform="translate(92.55 294.53)"><tspan x="0" y="0">L</tspan></text>
+  <text class="cls-2" transform="translate(220.55 372.53)"><tspan x="0" y="0">Y</tspan></text>
+  <text class="cls-3" transform="translate(415.33 168.53)"><tspan class="cls-1"><tspan x="0" y="0">YOUR STRATEGY FOR</tspan></tspan><tspan class="cls-4"><tspan x="0" y="100.8">TRUSTWORTHY AI</tspan></tspan></text>
+</svg>

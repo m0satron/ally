@@ -95,6 +95,8 @@ const CTALabel = {
   en: "discover all building blocks",
   nl: ";ontdek alle bouwstenen",
 };
+
+
 </script>
 
 <style scoped lang="scss">

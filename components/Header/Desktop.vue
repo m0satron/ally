@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="header">
       <NuxtLink :to="'/'">
-        <img class="logo" src="~/assets/logos/ALLY_logo.svg">
+        <img class="logo" src="~/assets/logos/logo_ALLY_new.svg">
         <!-- <span class="title"> Ally - Ethical policy toolbox </span> -->
       </NuxtLink>
       <!-- <div class="logos">
@@ -57,8 +57,8 @@ defineProps<{ items?: unknown[]; locale: Locale }>();
     //   text-transform: uppercase;
     // }
     .logo {
-      height: 2rem;
-      margin-right: 2rem
+      height: 3rem;
+      // margin-right: 2rem
     }
     // .logos {
     //   margin-right: 4.3rem;

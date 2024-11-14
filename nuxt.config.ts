@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   }, //temporary workaround for a bug
   css: ["~/assets/scss/main.scss"],
   modules: ["@vueuse/nuxt", "@pinia/nuxt", "@nuxt/eslint"],
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
   // typescript: {
   //   typeCheck: true
   // }

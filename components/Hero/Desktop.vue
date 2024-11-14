@@ -71,7 +71,8 @@ defineProps<HeroProps>();
 }
 
 .hero-image {
-  object-fit: cover;
+  object-fit: none;
+  // object-fit: cover;
   width: 100%;
   border-radius: 1.25rem;
 }
