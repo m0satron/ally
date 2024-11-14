@@ -1,37 +1,39 @@
 <template>
   <div class="layout">
     <header class="header">
-      <HeaderDesktop 
-        :items="routes" 
-        :locale="locale" 
-        @change:locale="setLocale" />
+      <HeaderDesktop
+        :items="orderedRoutes"
+        :locale="locale"
+        @change:locale="setLocale"
+      />
     </header>
-<div class="content-wrapper">
+    <div class="content-wrapper">
+      <div class="content">
+        <slot />
+      </div>
 
-  <div class="content">
-    <slot/>
-  </div>
-  
-  <footer class="footer">
-    <FooterDesktop />
-  </footer>
-</div>
-
-
+      <footer class="footer">
+        <FooterDesktop />
+      </footer>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const { setLocale } = useGlobalStore();
+const { locale } = storeToRefs(useGlobalStore());
 
-const routes = useRouter().getRoutes().filter(({path}) => !path.includes(':'))
+const desiredOrder = ['/', '/building-blocks', '/cases', '/about'];
 
-const { setLocale } = useGlobalStore()
-const { locale } = storeToRefs(useGlobalStore())
+const routes = useRouter()
+  .getRoutes()
+  .filter(({ path }) => !path.includes(":"));
 
+const orderedRoutes = desiredOrder.map(path => routes.find(route => route.path === path));
 </script>
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/spacing' as *;
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/spacing" as *;
 
 .layout {
   display: flex;
@@ -68,7 +70,5 @@ const { locale } = storeToRefs(useGlobalStore())
   background-color: $deep-purple;
   padding: 1rem;
   margin-top: auto;
-
-
 }
 </style>

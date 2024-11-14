@@ -1,6 +1,5 @@
-import type { Locale } from '../Locale'
-import type { DirectusMediaFile } from './Media';
-
+import type { Locale } from "../Locale";
+import type { DirectusMediaFile } from "./Media";
 
 export interface DirectusHeroTextContent {
   id: string;

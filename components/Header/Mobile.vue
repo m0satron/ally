@@ -2,9 +2,9 @@
   <div class="wrapper">
     <div class="header">
       <button class="hamburger" @click="(event: MouseEvent) => toggleMenu()">
-        <span :class="{ open: isMenuOpen }"/>
-        <span :class="{ open: isMenuOpen }"/>
-        <span :class="{ open: isMenuOpen }"/>
+        <span :class="{ open: isMenuOpen }" />
+        <span :class="{ open: isMenuOpen }" />
+        <span :class="{ open: isMenuOpen }" />
       </button>
       <div class="menu" :class="{ visible: isMenuOpen }">
         <div class="menu-title">
@@ -12,7 +12,7 @@
             :locales="[
               { label: 'EN', value: 'en' },
               { label: 'FR', value: 'fr' },
-              { label: 'NL', value: 'nl' }
+              { label: 'NL', value: 'nl' },
             ]"
             :locale="locale"
             @change="(e: string) => $emit('change:locale', e)"
@@ -22,7 +22,7 @@
             class="close-button"
             alt="close-button"
             @click="() => toggleMenu()"
-          >
+          />
         </div>
 
         <NavbarMobile class="navbar" :items="$props.items" />
@@ -33,16 +33,16 @@
 </template>
 
 <script setup lang="ts">
-import type { Locale } from '~/types/Locale'
+import type { Locale } from "~/types/Locale";
 
-defineProps<{ items?: unknown[]; locale: Locale }>()
+defineProps<{ items?: unknown[]; locale: Locale }>();
 
-const [isMenuOpen, toggleMenu] = useToggle(false)
+const [isMenuOpen, toggleMenu] = useToggle(false);
 </script>
 
 <style scoped lang="scss">
-@use 'src/assets/colors' as *;
-@use 'src/assets/spacing' as *;
+@use "src/assets/colors" as *;
+@use "src/assets/spacing" as *;
 
 .wrapper {
   display: flex;

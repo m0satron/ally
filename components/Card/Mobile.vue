@@ -1,7 +1,12 @@
 <template>
   <div class="card" :class="[url && 'hoverable', color || 'primary']">
     <template v-if="categories?.length">
-      <ChipItem v-for="category in categories" :key="category" :label="category" class="chip" />
+      <ChipItem
+        v-for="category in categories"
+        :key="category"
+        :label="category"
+        class="chip"
+      />
     </template>
     <h2 class="title">{{ title }}</h2>
     <p>{{ description }}</p>
@@ -9,14 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CardProps } from '@/types/components/index'
+import type { CardProps } from "@/types/components/index";
 
-defineProps<CardProps>()
+defineProps<CardProps>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/colors' as *;
-@use 'sass:color';
+@use "/assets/colors" as *;
+@use "sass:color";
 
 .card {
   height: 16rem;

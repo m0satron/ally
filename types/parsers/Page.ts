@@ -1,12 +1,11 @@
-import type { Locale } from  '../Locale.ts'
+import type { Locale } from "../Locale.ts";
 
 interface Action {
   url: string;
   label: {
     [locale in Locale]: string;
   };
-};
-
+}
 
 export interface Section {
   title: {
@@ -16,7 +15,7 @@ export interface Section {
     [locale in Locale]: string;
   };
   action?: Action;
-};
+}
 
 export interface Page {
   slug: string;
@@ -24,4 +23,4 @@ export interface Page {
     [locale in Locale]: string;
   };
   sections: Section[];
-};
+}

@@ -1,5 +1,5 @@
 export interface OptionProps {
-  label: string
-  value: string | number
+  label: string;
+  value: string | number | null;
 }
-export type OptionsList = OptionProps[]
+export type OptionsList = OptionProps[];

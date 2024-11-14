@@ -1,11 +1,11 @@
 <template>
-  <div class="wrapper" :class="{'wrapper-dense': $props.dense}">
+  <div class="wrapper" :class="{ 'wrapper-dense': $props.dense }">
     <div class="inner-background" />
-    <div class="background"/>
+    <div class="background" />
 
     <div class="content">
       <div v-if="$props.media" class="media-container">
-        <img :src="$props.media" alt="hero image" class="hero-image" >
+        <img :src="$props.media" alt="hero image" class="hero-image" />
       </div>
       <CardGlass v-bind="$props" />
     </div>
@@ -13,13 +13,13 @@
 </template>
 
 <script setup lang="ts">
-import type { HeroProps } from '@/types/components'
+import type { HeroProps } from "@/types/components";
 
-defineProps<HeroProps>()
+defineProps<HeroProps>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
+@use "/assets/scss/colors" as *;
 
 .wrapper {
   position: relative;
@@ -29,7 +29,7 @@ defineProps<HeroProps>()
   padding-bottom: 3.18rem;
   height: 40rem;
   &-dense {
-    height: unset
+    height: unset;
   }
 }
 
@@ -71,7 +71,8 @@ defineProps<HeroProps>()
 }
 
 .hero-image {
-  object-fit: cover;
+  object-fit: none;
+  // object-fit: cover;
   width: 100%;
   border-radius: 1.25rem;
 }

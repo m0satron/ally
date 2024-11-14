@@ -6,7 +6,7 @@
 
     <div class="content-wrapper">
       <div class="content">
-        <slot name="content"/>
+        <slot name="content" />
       </div>
 
       <footer class="footer">
@@ -27,8 +27,8 @@
 </script>
 
 <style scoped lang="scss">
-@use '/assets/colors' as *;
-@use '/assets/spacing' as *;
+@use "/assets/colors" as *;
+@use "/assets/spacing" as *;
 
 .layout {
   display: flex;

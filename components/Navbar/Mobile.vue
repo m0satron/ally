@@ -5,14 +5,12 @@
 </template>
 
 <script setup lang="ts">
-
-
-defineProps<{ items?: unknown[] }>()
+defineProps<{ items?: unknown[] }>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/colors' as *;
-@use 'sass:color';
+@use "/assets/colors" as *;
+@use "sass:color";
 
 nav {
   width: 100%;

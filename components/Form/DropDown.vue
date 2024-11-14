@@ -1,38 +1,48 @@
 <template>
   <div ref="dropdown" class="dropdown">
     <button @click="toggleDropdown">
-      <span>{{ model?.label || placeholder || 'Select' }}</span>
-      <img alt="icon" :src="ChevronDown" class="icon" :class="{ open: showDropdown }" >
+      <span>{{ model?.label || placeholder || "Select" }}</span>
+      <img
+        alt="icon"
+        :src="ChevronDown"
+        class="icon"
+        :class="{ open: showDropdown }"
+      />
     </button>
     <ul v-if="showDropdown" class="list">
-      <li v-for="option in options" :key="option.value" class="list-item" @click="select(option)">
+      <li
+        v-for="option in options"
+        :key="option.value"
+        class="list-item"
+        @click="select(option)"
+      >
         {{ option.label }}
       </li>
     </ul>
   </div>
 </template>
 <script setup lang="ts">
-import type { OptionProps, OptionsList } from '@/types/components'
-import ChevronDown from '~/assets/icons/chevron-down.svg'
+import type { OptionProps, OptionsList } from "@/types/components";
+import ChevronDown from "~/assets/icons/chevron-down.svg";
 
-const model = defineModel<OptionProps>()
-defineProps<{ options: OptionsList; placeholder: string }>()
+const model = defineModel<OptionProps>();
+defineProps<{ options: OptionsList; placeholder: string }>();
 
-const dropdown = ref<HTMLElement | null>(null)
-const showDropdown = ref<boolean>(false)
-onClickOutside(dropdown, () => (showDropdown.value = false))
-const toggleDropdown = () => (showDropdown.value = !showDropdown.value)
+const dropdown = ref<HTMLElement | null>(null);
+const showDropdown = ref<boolean>(false);
+onClickOutside(dropdown, () => (showDropdown.value = false));
+const toggleDropdown = () => (showDropdown.value = !showDropdown.value);
 
 const select = (option: OptionProps) => {
-  model.value = option
-  showDropdown.value = false
-}
+  model.value = option;
+  showDropdown.value = false;
+};
 </script>
 
 <style scoped lang="scss">
-@use 'assets/scss/colors' as *;
-@use 'assets/scss/typography' as *;
-@use 'sass:color';
+@use "assets/scss/colors" as *;
+@use "assets/scss/typography" as *;
+@use "sass:color";
 .dropdown {
   position: relative;
 }

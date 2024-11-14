@@ -3,12 +3,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ title: string }>()
+defineProps<{ title: string }>();
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/typography' as *;
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/typography" as *;
 
 .page-title {
   color: $text-color;

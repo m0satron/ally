@@ -1,122 +1,102 @@
 <template>
   <main class="main">
     <div class="search-container">
-      <div class="search-container__text-content">
-        <h1 v-if="pages.blocks" class="search-container__title" >
-          {{ pages.blocks.title[locale] }}
-        </h1>
-        <p v-if="pages.blocks" class="search-container__description">
-          {{ pages.blocks?.sections?.[0].description[locale] }}
-        </p>
-
+      <div v-if="pageData" class="search-container__text-content">
+        <PageSection html onDark :title="pageData.title" :description="pageData.content[0]"/>
       </div>
-
-   
     </div>
 
     <div class="chips">
-          <ChipItem 
-            v-for="{label, value} in categories"
-            :key="value"
-            :label="label"
-            :class="filters.includes(value) ? 'selected' : ''"
-            @click="() => toggleFilterItem(value)"
-          />
-        </div>
+      <ChipItem
+        v-for="{ label, value } in categories"
+        :key="value"
+        :label="label"
+        :class="filters.includes(value) ? 'selected' : ''"
+        @click="() => toggleFilterItem(value)"
+      />
+    </div>
 
     <div class="content-wrapper">
-        <CardDesktop 
-          v-for="block in filteredBlocks" 
-          :key="block.id"
-          :title="block.title[locale]"
-          :description="block.description[locale]"
-                    :url="block.id"
-          @click="navigateTo(`/cases/${block.id}`)"
-        />
-        
-        <CardDesktop 
-        v-if="!filteredBlocks.length" 
+      <CardDesktop
+        v-for="block in filteredBlocks"
+        :key="block.id"
+        :title="block.title[locale]"
+        :description="block.description[locale]"
+        :url="block.id"
+        @click="navigateTo(`/cases/${block.id}`)"
+      />
+
+      <CardDesktop
+        v-if="!filteredBlocks.length"
         title="Not found"
         description="Try another search filter"
       />
-        </div>
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-const { locale } = storeToRefs(useGlobalStore())
-const { pages } = storeToRefs(useStaticPageStore())
-const { getStaticPage } = useStaticPageStore()
-const { cases } = storeToRefs(useCasesStore())
-const { getCases } = useCasesStore()
-const { getBuildingBlockCategories } = useGlobalStore()
+const { locale } = storeToRefs(useGlobalStore());
+const { pages } = storeToRefs(useStaticPageStore());
+const { getStaticPage } = useStaticPageStore();
+const { cases } = storeToRefs(useCasesStore());
+const { getCases } = useCasesStore();
+const { getBuildingBlockCategories } = useGlobalStore();
 
-onMounted(async() => 
-  await Promise.all([getBuildingBlockCategories(),getCases(), getStaticPage('blocks')])
-)
+onMounted(
+  async () =>
+    await Promise.all([
+      getBuildingBlockCategories(),
+      getCases(),
+      getStaticPage("cases"),
+    ]),
+);
 
-// const filteredBlocks = computed(() => {
-//   if(!cases.value) return []
-//   return cases.value
-//     .filter(({building_blocks_used}) => {
-//       //implement filter here
+const pageData = computed(() => {
+  if (!pages.value.cases)return null
 
-//       building_blocks_used.some()
-//     })
-// })
+  const title = pages.value.cases?.title[locale.value];
+  const content = pages.value.cases?.content?.map(c => c[locale.value])
 
-// const filteredBlocks = computed(() => {
-//   if (!cases.value || !filters.value.length) return cases.value;
+  return {
+    title,
+    content,
+  };
+});
 
-//   return cases.value.filter((caseItem) => {
-//     // Check if the case has building blocks and each block has a category
-//     return caseItem.building_blocks_used.some(block => {
-//       const blockCategory = block._custom.value.category._custom.value.slug;
-//       // Return true if the block's category matches any of the selected filters
-//       return filters.value.includes(blockCategory);
-//     });
-//   });
-// });
 
 const filteredBlocks = computed(() => {
   if (!cases.value) return [];
 
   if (!filters.value.length) return cases.value;
 
-  return cases.value.filter((caseItem) => 
-    caseItem.building_blocks_used.some(({category}) => filters.value.includes(category.slug)
-    )
-  )
+  return cases.value.filter((caseItem) =>
+    caseItem.building_blocks_used.some(({ category }) =>
+      filters.value.includes(category.slug),
+    ),
+  );
 });
-
 
 function toggleFilterItem(category: string) {
   const index = filters.value.indexOf(category);
 
-  if (index > -1) 
-    filters.value.splice(index, 1);
-  else 
-    filters.value.push(category);
-
+  if (index > -1) filters.value.splice(index, 1);
+  else filters.value.push(category);
 }
-const filters = ref([])
-
+const filters = ref([]);
 
 const categories = [
-  { label: 'Governance & values', value: 'governance_values' },
-  { label: 'Culture & skills', value: 'culture_skills' },
-  { label: 'Communication & involvement', value: 'communication_involvement' },
-  { label: 'Methods & processes', value: 'methods_processes ' }
-]
-
-
-
+  { label: "Governance & values", value: "governance_values" },
+  { label: "Culture & skills", value: "culture_skills" },
+  { label: "Communication & involvement", value: "communication_involvement" },
+  { label: "Methods & processes", value: "methods_processes " },
+];
 </script>
 
 <style scoped lang="scss">
-@use '/assets/scss/colors' as *;
-@use '/assets/scss/spacing' as *;
-@use 'sass:color';
+@use "/assets/scss/colors" as *;
+@use "/assets/scss/spacing" as *;
+@use "sass:color";
 
 .search-container {
   background-color: $deep-purple;
@@ -156,14 +136,13 @@ const categories = [
 }
 
 .chip {
-  cursor: pointer;  
+  cursor: pointer;
   transition: all 200ms ease;
 }
 
 .selected {
-  color:white;
+  color: white;
   background-color: color.adjust($medium-purple, $alpha: -0.15);
-
 }
 
 .content-wrapper {
@@ -187,20 +166,13 @@ const categories = [
   flex: 2;
 }
 
-
 .card {
   height: 16rem;
   color: $text-color;
   background-color: white;
-  border-radius: 0.315rem;
-  padding: 1.25rem;
-  border: 1px solid $light-blue;
-  flex: calc(50% - 2rem);
   margin-bottom: 1rem;
   .title {
     font-weight: bold;
   }
 }
-
-
 </style>

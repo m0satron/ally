@@ -1,15 +1,15 @@
 export interface HeroProps {
-  title: string
-  description: string
-  media?: string
-  dense?:boolean
-  categories?: string[]
+  title: string;
+  description: string;
+  media?: string;
+  dense?: boolean;
+  categories?: string[];
   primary_action?: {
-    label: string
-    url: string
-  }
+    label: string;
+    url: string;
+  };
   secondary_action?: {
-    label: string
-    url: string
-  }
+    label: string;
+    url: string;
+  };
 }
