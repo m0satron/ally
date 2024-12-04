@@ -79,14 +79,14 @@
       </div>
     </Suspense>
 
-    <BannerDesktop
+    <!-- <BannerDesktop
       v-if="banner"
       class="banner"
       :title="banner.title[locale]"
       :description="banner.description[locale]"
       :link-description="banner.action.label[locale]"
       :url="banner.action.url"
-    />
+    /> -->
   </main>
 </template>
 <script setup lang="ts">
